@@ -1,4 +1,6 @@
+import React from "react";
 import styled from "styled-components";
+import Link from "next/link";
 
 interface IButtonContainerProps {
   cta?: boolean;
@@ -25,7 +27,7 @@ const ButtonContainer = styled.button<IButtonContainerProps>`
   }
 `;
 
-interface IButtonProps {
+interface IBaseProps {
   /**
    * The text to render within the button element
    */
@@ -37,12 +39,46 @@ interface IButtonProps {
   cta?: boolean;
 }
 
-export default function Button(props: IButtonProps) {
+type IButtonProps = IBaseProps &
+  React.DetailedHTMLProps<React.ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement> & {
+    /**
+     * Is this button also a link? Then it will render as an link component instead
+     */
+    isLink: false;
+  };
+
+type IAnchorProps = IBaseProps & {
+  /**
+   * Is this button also a link? Then it will render as an link component instead
+   */
+  isLink: true;
+
+  /**
+   * Where should this link route to?
+   */
+  to: string;
+};
+
+type IProps = IAnchorProps | IButtonProps;
+
+export default function Button(props: IProps) {
   const { buttonText, cta } = props;
 
-  return (
-    <ButtonContainer cta={cta}>
-      <p>{buttonText}</p>
-    </ButtonContainer>
-  );
+  if (props.isLink) {
+    const { to } = props;
+    return (
+      <Link href={to}>
+        <ButtonContainer cta={cta}>
+          <p>{buttonText}</p>
+        </ButtonContainer>
+      </Link>
+    );
+  } else if (props.isLink === false) {
+    const { onClick } = props;
+    return (
+      <ButtonContainer cta={cta} onClick={onClick}>
+        <p>{buttonText}</p>
+      </ButtonContainer>
+    );
+  }
 }
