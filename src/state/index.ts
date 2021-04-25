@@ -11,4 +11,6 @@ export type IGlobalState = ReturnType<typeof globalState>;
 
 export type IThunkAction<T extends Action> = ThunkAction<void, IGlobalState, null, T>;
 
-export default createStore(globalState, applyMiddleware(thunk, logger));
+const store = createStore(globalState, applyMiddleware(thunk, logger));
+
+export default store;

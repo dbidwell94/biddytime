@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import Link from "next/link";
+import { Link } from "react-router-dom";
 
 interface IButtonContainerProps {
   cta?: boolean;
@@ -67,7 +67,7 @@ export default function Button(props: IProps) {
   if (props.isLink) {
     const { to } = props;
     return (
-      <Link href={to}>
+      <Link to={to}>
         <ButtonContainer cta={cta}>
           <p>{buttonText}</p>
         </ButtonContainer>
@@ -80,5 +80,5 @@ export default function Button(props: IProps) {
         <p>{buttonText}</p>
       </ButtonContainer>
     );
-  }
+  } else return <></>;
 }

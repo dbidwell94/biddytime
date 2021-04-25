@@ -1,6 +1,6 @@
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
-import { toggleAuthModal } from "../state/authReducer/actions";
+import { toggleAuthModal } from "../../state/authReducer/actions";
 import React from "react";
 
 const AuthContainer = styled.div`
