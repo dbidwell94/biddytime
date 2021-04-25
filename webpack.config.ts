@@ -55,7 +55,7 @@ export default function config(): Configuration {
     optimization: {
       minimize: true,
       splitChunks: {
-        chunks: "async",
+        chunks: "all",
         name: "[name].[chunkhash].bundle.js",
         maxSize: 120000,
       },

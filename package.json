@@ -13,7 +13,8 @@
     "source": "./dist",
     "include": [
       "/"
-    ]
+    ],
+    "puppeteerArgs": ["--no-sandbox", "--disable-setuid-sandbox"]
   },
   "prettier": {
     "arrowParens": "always",
