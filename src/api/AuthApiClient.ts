@@ -14,9 +14,9 @@ interface IUserRegisterBody {
   password: string;
 }
 
-export default class AuthApiClient extends ApiCaller {
+export class AuthApiClient extends ApiCaller {
   constructor() {
-    super("localhost:7002");
+    super("http://localhost:7002");
   }
 
   async login(username: string, password: string) {
@@ -29,3 +29,5 @@ export default class AuthApiClient extends ApiCaller {
     return result;
   }
 }
+
+export default new AuthApiClient();

@@ -4,6 +4,7 @@ import { toggleAuthModal } from "@state/authReducer/actions";
 import React from "react";
 import Input from "@components/FormComponents/Input";
 import Button from "@components/Button";
+import authClient from "@api/AuthApiClient";
 
 const AuthContainer = styled.div`
   position: fixed;
@@ -55,14 +56,21 @@ export default function AuthModal() {
     dispatch(toggleAuthModal());
   }
 
-  function onSubmit(e: React.FormEvent<HTMLFormElement>) {
+  async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    try {
+      const result = await authClient.login("dbidwell", "Aw3s0m333!!!");
+    } catch (err) {
+      if (authClient.isApiError(err)) {
+        console.error(err.message, err.details);
+      }
+    }
   }
 
   return (
     <AuthContainer onClick={handleExternalClickCapture}>
       <div className="modal" onClick={(e) => e.stopPropagation()}>
-        <form onSubmit={onSubmit}>
+        <form onSubmit={async (e) => await onSubmit(e)}>
           <Input id="usename" name="username" placeholder="Username" className="input-item" />
           <Input id="password" name="password" placeholder="Password" type="password" className="input-item" />
           <Button buttonText="Submit" isLink={false} cta type="submit" />

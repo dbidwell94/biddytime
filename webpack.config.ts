@@ -5,7 +5,7 @@ import tsconfigPathPlugin from "tsconfig-paths-webpack-plugin";
 import compressionPlugin from "compression-webpack-plugin";
 
 export default function config(...args: any[]): Configuration {
-  const isProd = args[0].mode && args[0].mode === "production";
+  const isProd: boolean = Boolean(args[0].mode && args[0].mode === "production");
 
   return {
     entry: path.join(__dirname, "src", "index.tsx"),
@@ -15,12 +15,18 @@ export default function config(...args: any[]): Configuration {
       rules: [
         {
           test: /\.(tsx?|jsx?)$/,
-          use: {
-            loader: "babel-loader",
-            options: {
-              presets: ["@babel/preset-env", "@babel/preset-react", "@babel/preset-typescript"],
+          use: [
+            {
+              loader: "babel-loader",
+              options: {
+                presets: [
+                  ["@babel/preset-env", { useBuiltIns: "entry" }],
+                  "@babel/preset-react",
+                  "@babel/preset-typescript",
+                ],
+              },
             },
-          },
+          ],
         },
         {
           test: /\.(css|less)$/,
@@ -54,16 +60,12 @@ export default function config(...args: any[]): Configuration {
       hot: true,
       publicPath: "/",
     },
-    optimization: isProd
-      ? {
-          minimize: true,
-          splitChunks: {
-            chunks: "all",
-            name: "[name].[chunkhash].bundle.js",
-            maxSize: 120000,
-          },
-        }
-      : {},
+    optimization: {
+      minimize: true,
+      splitChunks: {
+        chunks: "all",
+      },
+    },
     output: {
       filename: isProd ? "[name].js" : "[chunkhash].js",
     },
