@@ -1,8 +1,6 @@
 import thunk, { ThunkAction } from "redux-thunk";
 import logger from "redux-logger";
-
-import authReducer from "./authReducer";
-
+import authReducer from "@state/authReducer";
 import { Action, applyMiddleware, combineReducers, createStore } from "redux";
 
 const globalState = combineReducers({ auth: authReducer });

@@ -1,4 +1,4 @@
-import { IAuthAction, IAuthState, actionTypes } from "./types";
+import { IAuthAction, IAuthState, actionTypes } from "@state/authReducer/types";
 
 const initialState: IAuthState = {
   authModalOpen: false,

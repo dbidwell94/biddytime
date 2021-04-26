@@ -4,10 +4,12 @@ import htmlWebpackPlugin from "html-webpack-plugin";
 import tsconfigPathPlugin from "tsconfig-paths-webpack-plugin";
 import compressionPlugin from "compression-webpack-plugin";
 
-export default function config(): Configuration {
+export default function config(...args: any[]): Configuration {
+  const isProd = args[0].mode && args[0].mode === "production";
+
   return {
     entry: path.join(__dirname, "src", "index.tsx"),
-    mode: process.env.NODE_ENV === "production" ? "production" : "development",
+    mode: isProd ? "production" : "development",
     target: "web",
     module: {
       rules: [
@@ -47,21 +49,23 @@ export default function config(): Configuration {
     ],
     devServer: {
       historyApiFallback: true,
-      port: 1437,
+      port: 8675,
       open: true,
       hot: true,
       publicPath: "/",
     },
-    optimization: {
-      minimize: true,
-      splitChunks: {
-        chunks: "all",
-        name: "[name].[chunkhash].bundle.js",
-        maxSize: 120000,
-      },
-    },
+    optimization: isProd
+      ? {
+          minimize: true,
+          splitChunks: {
+            chunks: "all",
+            name: "[name].[chunkhash].bundle.js",
+            maxSize: 120000,
+          },
+        }
+      : {},
     output: {
-      filename: "[chunkhash].js",
+      filename: isProd ? "[name].js" : "[chunkhash].js",
     },
   };
 }

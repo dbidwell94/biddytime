@@ -9,7 +9,7 @@ interface IButtonContainerProps {
 const ButtonContainer = styled.button<IButtonContainerProps>`
   all: unset;
   text-transform: ${({ cta }) => (cta ? "uppercase" : "none")};
-  border: 0.25rem solid ${({ cta }) => (cta ? "cyan" : "black")};
+  border: 0.125rem solid ${({ cta }) => (cta ? "cyan" : "black")};
   padding: ${({ cta }) => (cta ? "0.5rem 1rem" : "0.25rem .5rem")};
   border-radius: 0.75rem;
   transition: 0.125s ease-in-out all;

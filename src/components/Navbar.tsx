@@ -1,8 +1,8 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
-import { toggleAuthModal } from "../state/authReducer/actions";
-import Button from "./Button";
+import { toggleAuthModal } from "@state/authReducer/actions";
+import Button from "@components/Button";
 
 const Container = styled.nav`
   display: flex;
@@ -13,7 +13,7 @@ const Container = styled.nav`
   div.links {
     display: flex;
     justify-content: center;
-    @media (max-width: ${({ theme }) => theme.breakpoints.smallScreen}) {
+    @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
       flex-direction: column;
       align-items: center;
       button {
@@ -25,7 +25,7 @@ const Container = styled.nav`
     }
   }
 
-  @media (max-width: ${({ theme }) => theme.breakpoints.smallScreen}) {
+  @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
     flex-direction: column;
   }
 `;

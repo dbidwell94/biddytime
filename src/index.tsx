@@ -2,9 +2,8 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
 import { ThemeProvider, createGlobalStyle } from "styled-components";
-import { BrowserRouter as Router } from "react-router-dom";
-import Navbar from "./components/Navbar";
-import store from "./state";
+import store from "@state/index";
+import App from "@sections/index";
 
 if ((module as any).hot) {
   (module as any).hot.accept();
@@ -73,9 +72,7 @@ function Index() {
     <Provider store={store}>
       <ThemeProvider theme={theme}>
         <GlobalStyle />
-        <Router>
-          <Navbar />
-        </Router>
+        <App />
       </ThemeProvider>
     </Provider>
   );

@@ -1,7 +1,9 @@
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
-import { toggleAuthModal } from "../../state/authReducer/actions";
+import { toggleAuthModal } from "@state/authReducer/actions";
 import React from "react";
+import Input from "@components/FormComponents/Input";
+import Button from "@components/Button";
 
 const AuthContainer = styled.div`
   position: fixed;
@@ -13,13 +15,34 @@ const AuthContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  margin: 0;
+  padding: 0;
   div.modal {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     background: white;
     min-width: 50%;
     min-height: 50%;
-    border: 0.25rem solid black;
     border-radius: 2rem;
     box-shadow: inset 0rem 0rem 1rem black;
+    form {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      .input-item {
+        margin: 1rem 0rem;
+        font-size: 2rem;
+        height: 2.5rem;
+      }
+    }
+
+    @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
+      width: 100%;
+    }
   }
 `;
 
@@ -32,9 +55,19 @@ export default function AuthModal() {
     dispatch(toggleAuthModal());
   }
 
+  function onSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+  }
+
   return (
     <AuthContainer onClick={handleExternalClickCapture}>
-      <div className="modal" onClick={(e) => e.stopPropagation()}></div>
+      <div className="modal" onClick={(e) => e.stopPropagation()}>
+        <form onSubmit={onSubmit}>
+          <Input id="usename" name="username" placeholder="Username" className="input-item" />
+          <Input id="password" name="password" placeholder="Password" type="password" className="input-item" />
+          <Button buttonText="Submit" isLink={false} cta type="submit" />
+        </form>
+      </div>
     </AuthContainer>
   );
 }
