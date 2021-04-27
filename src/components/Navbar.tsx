@@ -1,7 +1,7 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
-import { toggleAuthModal } from "@state/authReducer/actions";
+import { invalidateLogin, toggleAuthModal } from "@state/authReducer/actions";
 import Button from "@components/Button";
 
 const Container = styled.nav`
@@ -40,6 +40,11 @@ export default function Navbar() {
     dispatch(toggleAuthModal());
   }
 
+  function handleLogout(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
+    e.preventDefault();
+    dispatch(invalidateLogin());
+  }
+
   return (
     <Container>
       <div className="title">
@@ -53,7 +58,7 @@ export default function Navbar() {
           </>
         ) : (
           <>
-            <Button buttonText="Logout" isLink={false} />
+            <Button buttonText="Logout" isLink={false} onClick={handleLogout} />
           </>
         )}
       </div>

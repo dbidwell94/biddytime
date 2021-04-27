@@ -1,10 +1,10 @@
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
-import { toggleAuthModal } from "@state/authReducer/actions";
-import React from "react";
+import { login, toggleAuthModal } from "@state/authReducer/actions";
+import React, { useState } from "react";
 import Input from "@components/FormComponents/Input";
 import Button from "@components/Button";
-import authClient from "@api/AuthApiClient";
+import * as yup from "yup";
 
 const AuthContainer = styled.div`
   position: fixed;
@@ -47,8 +47,15 @@ const AuthContainer = styled.div`
   }
 `;
 
+const formSchema = yup.object().shape({
+  username: yup.string().required(),
+  password: yup.string().required(),
+});
+
 export default function AuthModal() {
   const dispatch = useDispatch();
+  const [formValues, setFormValues] = useState({ username: "", password: "" });
+  const [submitDisabled, setSubmitDisabled] = useState(true);
 
   function handleExternalClickCapture(e: React.MouseEvent<HTMLDivElement, MouseEvent>) {
     e.preventDefault();
@@ -58,22 +65,39 @@ export default function AuthModal() {
 
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    try {
-      const result = await authClient.login("dbidwell", "Aw3s0m333!!!");
-    } catch (err) {
-      if (authClient.isApiError(err)) {
-        console.error(err.message, err.details);
-      }
-    }
+    setSubmitDisabled(true);
+    dispatch(login(formValues.username, formValues.password));
+  }
+
+  function onFormChange(e: React.ChangeEvent<HTMLInputElement>) {
+    e.preventDefault();
+    const { name, value } = e.target;
+    setFormValues({ ...formValues, [name]: value });
   }
 
   return (
     <AuthContainer onClick={handleExternalClickCapture}>
       <div className="modal" onClick={(e) => e.stopPropagation()}>
         <form onSubmit={async (e) => await onSubmit(e)}>
-          <Input id="usename" name="username" placeholder="Username" className="input-item" />
-          <Input id="password" name="password" placeholder="Password" type="password" className="input-item" />
-          <Button buttonText="Submit" isLink={false} cta type="submit" />
+          <Input
+            id="username"
+            name="username"
+            placeholder="Username"
+            className="input-item"
+            value={formValues.username}
+            onChange={onFormChange}
+            errorText={"test"}
+          />
+          <Input
+            id="password"
+            name="password"
+            placeholder="Password"
+            type="password"
+            className="input-item"
+            value={formValues.password}
+            onChange={onFormChange}
+          />
+          <Button buttonText="Submit" isLink={false} cta type="submit" disabled={submitDisabled} />
         </form>
       </div>
     </AuthContainer>

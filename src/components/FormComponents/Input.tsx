@@ -28,6 +28,11 @@ const InputContainer = styled.div<IInputContainerProps>`
       border: thin solid rgba(255, 0, 0, 0.5) l;
     }
   }
+  .error-text {
+    text-align: center;
+    margin: 0;
+    padding: 0;
+  }
 `;
 
 type IInputProps = Omit<
@@ -35,14 +40,16 @@ type IInputProps = Omit<
   "ref"
 > & {
   errorText?: string;
+  labelText?: string;
 };
 
 export default React.forwardRef<HTMLInputElement, IInputProps>((props, ref) => {
-  const { errorText, ...rest } = props;
+  const { errorText, id, name, ...rest } = props;
 
   return (
     <InputContainer hasError={Boolean(errorText)} className={`${Boolean(errorText) ? "error" : ""}`}>
-      <input {...rest} />
+      <input {...rest} id={id} name={name} />
+      {errorText && <p className="error-text">{errorText}</p>}
     </InputContainer>
   );
 });

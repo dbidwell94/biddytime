@@ -4,6 +4,8 @@ import { IUser } from "../types";
 export enum actionTypes {
   setUser = "setUser",
   setAuthModalOpen = "setAuthModalOpen",
+  setToken = "setToken",
+  setIsLoggedIn = "setIsLoggedIn",
 }
 
 interface IAuthModalAction extends Action {
@@ -13,7 +15,17 @@ interface IAuthModalAction extends Action {
 
 interface ISetUserAction extends Action {
   type: actionTypes.setUser;
-  payload: IUser;
+  payload: IUser | null;
+}
+
+interface ISetTokenAction extends Action {
+  type: actionTypes.setToken;
+  payload: string | null;
+}
+
+interface ISetIsLoggedInAction extends Action {
+  type: actionTypes.setIsLoggedIn;
+  payload: boolean;
 }
 
 export interface IAuthState {
@@ -23,4 +35,4 @@ export interface IAuthState {
   authModalOpen: boolean;
 }
 
-export type IAuthAction = IAuthModalAction | ISetUserAction;
+export type IAuthAction = IAuthModalAction | ISetUserAction | ISetTokenAction | ISetIsLoggedInAction;

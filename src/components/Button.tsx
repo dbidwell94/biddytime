@@ -25,6 +25,10 @@ const ButtonContainer = styled.button<IButtonContainerProps>`
     background: ${({ cta }) => (cta ? "lightblue" : "grey")};
     color: ${({ cta }) => (cta ? "black" : "white")};
   }
+  &:disabled {
+    border-color: grey;
+    opacity: 0.25;
+  }
 `;
 
 interface IBaseProps {
@@ -74,9 +78,9 @@ export default function Button(props: IProps) {
       </Link>
     );
   } else if (props.isLink === false) {
-    const { onClick } = props;
+    const { onClick, ref, ...rest } = props;
     return (
-      <ButtonContainer cta={cta} onClick={onClick}>
+      <ButtonContainer cta={cta} onClick={onClick} {...rest}>
         <p>{buttonText}</p>
       </ButtonContainer>
     );

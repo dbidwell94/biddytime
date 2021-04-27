@@ -1,5 +1,7 @@
 import axios, { AxiosInstance } from "axios";
 import state from "@state/index";
+import { addMessage } from "@state/messageReducer/messageActions";
+import { messageSeverity } from "@state/messageReducer/types";
 
 interface IResponseData<T> {
   data: T;
@@ -84,6 +86,7 @@ export abstract class ApiCaller {
       return response;
     } catch (err) {
       if (axios.isAxiosError(err)) {
+        state.dispatch(addMessage(err.response?.data?.error || err.message, messageSeverity.critical));
         throw new ApiError(err.message, err.response?.status, err.response?.data);
       }
       throw err;
