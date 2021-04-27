@@ -70,6 +70,10 @@ const MessageContainer = styled.div<IMessageContainerProps>`
   &.exit {
     animation: ${exit} ${messageExitTimeMs / 1000}s ease-in-out 1 forwards;
   }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
+    border-radius: 0;
+  }
 `;
 
 interface IMessageProps {

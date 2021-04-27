@@ -12,21 +12,28 @@ const AuthContainer = styled.div`
   width: 100vw;
   top: 0;
   left: 0;
-  background: rgba(0, 0, 0, 0.25);
+  background: rgba(0, 0, 0, 0.125);
   display: flex;
   justify-content: center;
   align-items: center;
   margin: 0;
   padding: 0;
+  box-shadow: inset 0rem 0rem 10rem black;
   div.modal {
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
+    position: relative;
     background: white;
     min-width: 50%;
     min-height: 50%;
     border-radius: 2rem;
-    box-shadow: inset 0rem 0rem 1rem black;
+    box-shadow: 0rem 0rem 2rem black;
+    .title {
+      position: absolute;
+      top: 0;
+    }
     form {
       width: 100%;
       height: 100%;
@@ -43,6 +50,7 @@ const AuthContainer = styled.div`
 
     @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
       width: 100%;
+      border-radius: 0;
     }
   }
 `;
@@ -78,6 +86,7 @@ export default function AuthModal() {
   return (
     <AuthContainer onClick={handleExternalClickCapture}>
       <div className="modal" onClick={(e) => e.stopPropagation()}>
+        <h2 className="title">Login</h2>
         <form onSubmit={async (e) => await onSubmit(e)}>
           <Input
             id="username"

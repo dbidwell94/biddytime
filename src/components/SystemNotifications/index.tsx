@@ -18,6 +18,9 @@ const MessagesContainer = styled.div`
   &.active {
     visibility: visible;
   }
+  @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
+    width: 100%;
+  }
 `;
 
 export default function SystemNotifications() {
