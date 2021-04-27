@@ -86,7 +86,6 @@ export default function AuthModal() {
             className="input-item"
             value={formValues.username}
             onChange={onFormChange}
-            errorText={"test"}
           />
           <Input
             id="password"
@@ -97,7 +96,7 @@ export default function AuthModal() {
             value={formValues.password}
             onChange={onFormChange}
           />
-          <Button buttonText="Submit" isLink={false} cta type="submit" disabled={submitDisabled} />
+          <Button buttonText="Submit" isLink={false} cta type="submit" />
         </form>
       </div>
     </AuthContainer>

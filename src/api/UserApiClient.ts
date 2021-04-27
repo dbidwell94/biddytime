@@ -3,7 +3,7 @@ import { ApiCaller } from ".";
 
 class UserApiClient extends ApiCaller {
   constructor() {
-    super("http://localhost:7002");
+    super();
   }
 
   async getUserById(id: number) {

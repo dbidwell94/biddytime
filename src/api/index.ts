@@ -25,9 +25,9 @@ export abstract class ApiCaller {
   private baseUrl: string;
   private token: string | null;
 
-  constructor(baseUrl: string) {
+  constructor() {
     this.token = state.getState().auth.token;
-    this.baseUrl = baseUrl;
+    this.baseUrl = this.getBaseUrl();
     this.axiosInstance = axios.create({ baseURL: this.baseUrl });
     this.subscribeToReduxState();
   }
@@ -78,6 +78,12 @@ export abstract class ApiCaller {
         }
       }
     });
+  }
+
+  private getBaseUrl(): string {
+    return window.location.host.includes("localhost")
+      ? "http://localhost:7002"
+      : "https://biddytime-backend.biddydev.com";
   }
 
   private async makeSafeRequest<T>(callback: () => Promise<T>): Promise<T> {
