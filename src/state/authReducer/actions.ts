@@ -9,23 +9,27 @@ export function toggleAuthModal(): IThunkAction<IAuthAction> {
   };
 }
 
-export function login(username: string, password: string): IThunkAction<IAuthAction> {
+export function login(username: string, password: string, callback?: () => void): IThunkAction<IAuthAction> {
   return async function (dispatch, getState) {
-    const response = await authClient.login(username, password);
-    dispatch({
-      type: actionTypes.setUser,
-      payload: response.data.user,
-    });
-    dispatch({
-      type: actionTypes.setToken,
-      payload: response.data.token,
-    });
-    dispatch({
-      type: actionTypes.setIsLoggedIn,
-      payload: true,
-    });
-
-    window.localStorage.setItem("token", response.data.token);
+    try {
+      const response = await authClient.login(username, password);
+      dispatch({
+        type: actionTypes.setUser,
+        payload: response.data.user,
+      });
+      dispatch({
+        type: actionTypes.setToken,
+        payload: response.data.token,
+      });
+      dispatch({
+        type: actionTypes.setIsLoggedIn,
+        payload: true,
+      });
+      window.localStorage.setItem("token", response.data.token);
+      if (callback) {
+        callback();
+      }
+    } catch (err) {}
   };
 }
 

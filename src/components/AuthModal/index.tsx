@@ -74,7 +74,11 @@ export default function AuthModal() {
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setSubmitDisabled(true);
-    dispatch(login(formValues.username, formValues.password));
+    dispatch(
+      login(formValues.username, formValues.password, () => {
+        dispatch(toggleAuthModal());
+      })
+    );
   }
 
   function onFormChange(e: React.ChangeEvent<HTMLInputElement>) {
