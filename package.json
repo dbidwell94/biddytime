@@ -7,7 +7,7 @@
     "format": "prettier . --write && git add .",
     "build": "webpack --mode=production",
     "postbuild": "react-snap",
-    "postinstall": "husky install"
+    "postinstall": "if [ \"$NODE_ENV\" != production ]; then husky install; fi;"
   },
   "reactSnap": {
     "source": "./dist",
